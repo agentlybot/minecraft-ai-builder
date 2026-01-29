@@ -1,0 +1,9 @@
+{
+  "description": "Build a simple 10x10 oak cabin with a door in the front and windows on the sides",
+  "player_pos": [0, 64, 0],
+  "settings": {
+    "creative_mode": true,
+    "auto_flatten_terrain": true,
+    "place_blocks_per_second": 20
+  }
+}
