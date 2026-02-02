@@ -1,0 +1,225 @@
+{
+  "project": "craft-architect",
+  "branchName": "ralph/craft-architect-mvp",
+  "description": "SaaS web app where kids chat with Steve the Builder AI to create Minecraft structures via natural language",
+  "techStack": {
+    "frontend": "Next.js 14 (App Router)",
+    "hosting": "Vercel",
+    "database": "Supabase PostgreSQL",
+    "auth": "Supabase Auth",
+    "payments": "Stripe",
+    "ai": "OpenAI GPT-4o",
+    "pythonBackend": "FastAPI on Railway"
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Database Schema Setup",
+      "description": "Create Supabase database schema with tables for users, servers, builds, and subscriptions with Row Level Security policies",
+      "acceptanceCriteria": [
+        "Users table with: id, email, display_name, avatar_url, subscription_tier, builds_remaining, created_at",
+        "Servers table with: id, user_id, name, host, rcon_port, rcon_password_encrypted, is_active, created_at",
+        "Builds table with: id, user_id, server_id, prompt, blueprint_json, status, commands_count, created_at",
+        "Subscriptions table with: id, user_id, stripe_customer_id, stripe_subscription_id, tier, status, current_period_end",
+        "RLS policies: users can only access their own data",
+        "Foreign key relationships properly defined",
+        "npm run typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false
+    },
+    {
+      "id": "US-002",
+      "title": "Next.js Project Setup with Supabase",
+      "description": "Initialize Next.js 14 project with Supabase client, Tailwind CSS, and folder structure",
+      "acceptanceCriteria": [
+        "Next.js 14 with App Router initialized",
+        "Tailwind CSS configured with Minecraft-inspired color palette",
+        "Supabase client configured with environment variables",
+        "Folder structure: app/, components/, lib/, types/",
+        "TypeScript strict mode enabled",
+        "ESLint and Prettier configured",
+        "npm run typecheck passes",
+        "npm run dev starts without errors"
+      ],
+      "priority": 2,
+      "passes": false
+    },
+    {
+      "id": "US-003",
+      "title": "Supabase Auth Integration",
+      "description": "Implement authentication with email/password and Google OAuth using Supabase Auth",
+      "acceptanceCriteria": [
+        "Login page with email/password form",
+        "Signup page with email/password form",
+        "Google OAuth button on both pages",
+        "Forgot password flow",
+        "Auth state managed via Supabase client",
+        "Protected route middleware redirects to login",
+        "Session persists across page refreshes",
+        "Logout functionality",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 3,
+      "passes": false
+    },
+    {
+      "id": "US-004",
+      "title": "Landing Page",
+      "description": "Create kid-friendly landing page with hero, features, and pricing sections",
+      "acceptanceCriteria": [
+        "Hero section with Steve character image and tagline",
+        "How it works section with 3 illustrated steps",
+        "Pricing cards for Free, Builder ($5), Architect ($10) tiers",
+        "CTA buttons: Sign Up, Login",
+        "Mobile responsive (works on 320px+)",
+        "Large colorful buttons (min 48px height)",
+        "Animations on scroll",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 4,
+      "passes": false
+    },
+    {
+      "id": "US-005",
+      "title": "Dashboard Layout",
+      "description": "Create authenticated dashboard layout with navigation and user info",
+      "acceptanceCriteria": [
+        "Sidebar navigation with: Build, Servers, History, Settings",
+        "Header with user avatar and builds remaining counter",
+        "Subscription tier badge displayed",
+        "Mobile: hamburger menu navigation",
+        "Active nav item highlighted",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 5,
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "title": "Server Connection Page",
+      "description": "Page for users to add and manage their Minecraft server RCON connections",
+      "acceptanceCriteria": [
+        "Form: Server Name, Host/IP, RCON Port (default 25575), RCON Password",
+        "Test Connection button with loading state",
+        "Success/error feedback with kid-friendly messages",
+        "Server list showing saved servers",
+        "Edit and Delete buttons for each server",
+        "Connection status indicator (green/red dot)",
+        "Help tooltip explaining RCON setup",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "title": "Chat Interface UI Components",
+      "description": "Build the Steve chat interface components without backend integration",
+      "acceptanceCriteria": [
+        "Steve avatar component (large, friendly)",
+        "Chat bubble component (left for Steve, right for user)",
+        "Message input with placeholder text",
+        "Big colorful Build button",
+        "Chat container with scroll",
+        "Typing indicator animation for Steve",
+        "Welcome message from Steve on mount",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 7,
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "title": "Python FastAPI Build Service",
+      "description": "Create FastAPI backend that processes build requests using existing AI builder code",
+      "acceptanceCriteria": [
+        "POST /api/build endpoint",
+        "Request body: { prompt, server_host, server_port, rcon_password, user_id }",
+        "Integrates SpatialAnalyzer and CommandGenerator classes",
+        "Executes commands via ServerInterface",
+        "Returns: { success, blocks_placed, execution_time, commands, error }",
+        "Health check endpoint: GET /health",
+        "CORS configured for Vercel frontend",
+        "Environment variables for OpenAI API key",
+        "npm run typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false
+    },
+    {
+      "id": "US-009",
+      "title": "Chat to Build Integration",
+      "description": "Connect chat UI to Python build API and show real-time progress",
+      "acceptanceCriteria": [
+        "User message triggers API call",
+        "Server selection dropdown in chat",
+        "Steve shows building animation during API call",
+        "Progress updates displayed in chat",
+        "Success: Steve announces completion with block count",
+        "Error: Steve shows friendly error message",
+        "Build saved to database on completion",
+        "Builds remaining decremented",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 9,
+      "passes": false
+    },
+    {
+      "id": "US-010",
+      "title": "Build History Page",
+      "description": "Page showing user's past builds with details",
+      "acceptanceCriteria": [
+        "Grid of past builds",
+        "Each card shows: prompt preview, date, status, block count",
+        "Click to expand full details",
+        "Filter by server dropdown",
+        "Pagination (10 per page)",
+        "Empty state for new users",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 10,
+      "passes": false
+    },
+    {
+      "id": "US-011",
+      "title": "Stripe Subscription Integration",
+      "description": "Implement Stripe Checkout and webhooks for subscription management",
+      "acceptanceCriteria": [
+        "Stripe Checkout session creation for each tier",
+        "Redirect to Stripe Checkout on upgrade click",
+        "Webhook endpoint for subscription events",
+        "Handle: checkout.session.completed, subscription.updated, subscription.deleted",
+        "Update user subscription_tier in database",
+        "Billing portal link in settings",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 11,
+      "passes": false
+    },
+    {
+      "id": "US-012",
+      "title": "Usage Limits Enforcement",
+      "description": "Implement build limits per subscription tier with UI feedback",
+      "acceptanceCriteria": [
+        "Free: 5 builds/month, Builder: 50/month, Architect: unlimited",
+        "builds_remaining shown in header",
+        "Warning message at 1 build remaining",
+        "Block build with upgrade CTA at 0 remaining",
+        "Reset builds on subscription renewal webhook",
+        "npm run typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 12,
+      "passes": false
+    }
+  ]
+}

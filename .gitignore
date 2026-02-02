@@ -45,6 +45,10 @@ world/
 worlds/
 crash-reports/
 logs/
+minecraft-server/
+
+# Local tasks/temp
+tasks/
 
 # OS
 .DS_Store

@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Press+Start+2P&display=swap');
+
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+:root {
+  --background: #1a1a2e;
+  --foreground: #f5f5dc;
+  --craft-dark: #1a1a2e;
+  --craft-dark-lighter: #252542;
+  --craft-cream: #F5F5DC;
+  --craft-grass: #5D8C3E;
+  --craft-grass-light: #7CB342;
+  --craft-grass-dark: #3E5C29;
+  --craft-stone: #7F7F7F;
+  --craft-stone-light: #A0A0A0;
+  --craft-stone-dark: #4A4A4A;
+  --craft-gold: #FFD700;
+  --craft-gold-dark: #DAA520;
+  --craft-water: #3F76E4;
+  --craft-diamond: #4AEDD9;
+  --craft-emerald: #17DD62;
+  --craft-redstone: #FF3B3B;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--craft-dark);
+  color: var(--craft-cream);
+  font-family: 'Nunito', system-ui, sans-serif;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(93, 140, 62, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(63, 118, 228, 0.1) 0%, transparent 50%);
+}
+
+/* Kid-friendly focus states - very visible */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--craft-gold), 0 0 0 6px var(--craft-dark);
+}
+
+/* Pixel-art style buttons */
+.btn-pixel {
+  position: relative;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  border-radius: 4px;
+  transition: all 150ms;
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3);
+  min-height: 48px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-pixel:active {
+  box-shadow: none;
+  transform: translate(1px, 1px);
+}
+
+.btn-pixel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-pixel-primary {
+  background-color: var(--craft-grass);
+  color: white;
+  border-bottom: 4px solid var(--craft-grass-dark);
+}
+
+.btn-pixel-primary:hover {
+  background-color: var(--craft-grass-light);
+}
+
+.btn-pixel-secondary {
+  background-color: var(--craft-stone);
+  color: white;
+  border-bottom: 4px solid var(--craft-stone-dark);
+}
+
+.btn-pixel-secondary:hover {
+  background-color: var(--craft-stone-light);
+}
+
+.btn-pixel-gold {
+  background-color: var(--craft-gold);
+  color: var(--craft-dark);
+  border-bottom: 4px solid var(--craft-gold-dark);
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3), 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.btn-pixel-gold:hover {
+  background-color: #FACC15;
+}
+
+.btn-pixel-danger {
+  background-color: var(--craft-redstone);
+  color: white;
+  border-bottom: 4px solid #CC0000;
+}
+
+/* Card component */
+.card-pixel {
+  background-color: var(--craft-dark-lighter);
+  border-radius: 8px;
+  border: 2px solid var(--craft-stone-dark);
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3);
+  padding: 1.5rem;
+}
+
+/* Input fields - large and friendly */
+.input-pixel {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--craft-dark);
+  border: 2px solid var(--craft-stone);
+  border-radius: 4px;
+  font-size: 1.125rem;
+  color: var(--craft-cream);
+  min-height: 48px;
+  transition: border-color 150ms;
+}
+
+.input-pixel::placeholder {
+  color: var(--craft-stone-light);
+}
+
+.input-pixel:focus {
+  border-color: var(--craft-grass);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(93, 140, 62, 0.5);
+}
+
+/* Chat bubble styles */
+.chat-bubble {
+  max-width: 80%;
+  padding: 1rem;
+  border-radius: 20px;
+  font-size: 1.125rem;
+  animation: slide-up 0.3s ease-out;
+}
+
+.chat-bubble-steve {
+  background-color: var(--craft-grass);
+  color: white;
+  border-bottom-left-radius: 4px;
+  margin-right: auto;
+}
+
+.chat-bubble-user {
+  background-color: var(--craft-water);
+  color: white;
+  border-bottom-right-radius: 4px;
+  margin-left: auto;
+}
+
+/* Status indicators */
+.status-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.status-online {
+  background-color: var(--craft-emerald);
+  animation: pulse 2s infinite;
+}
+
+.status-offline {
+  background-color: var(--craft-redstone);
+}
+
+.status-connecting {
+  background-color: var(--craft-gold);
+  animation: pulse 2s infinite;
+}
+
+/* Badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-free {
+  background-color: var(--craft-stone);
+  color: white;
+}
+
+.badge-builder {
+  background-color: var(--craft-gold);
+  color: var(--craft-dark);
+}
+
+.badge-architect {
+  background-color: var(--craft-diamond);
+  color: var(--craft-dark);
+}
+
+/* Section container */
+.section-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 1.5rem;
+  background-color: var(--craft-stone-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid var(--craft-stone);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--craft-grass), var(--craft-emerald));
+  transition: width 300ms;
+  border-radius: 4px;
+}
+
+/* Navigation styles */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--craft-stone-light);
+  transition: all 150ms;
+  min-height: 48px;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: var(--craft-dark);
+  color: var(--craft-cream);
+}
+
+.nav-link-active {
+  background-color: rgba(93, 140, 62, 0.2);
+  color: var(--craft-grass-light);
+  border-left: 4px solid var(--craft-grass);
+}
+
+/* Gradient text */
+.text-gradient-gold {
+  background: linear-gradient(to right, var(--craft-gold), #FDE047);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-diamond {
+  background: linear-gradient(to right, var(--craft-diamond), #67E8F9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Pixel grid background */
+.bg-pixel-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Animations */
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes typing {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-typing {
+  animation: typing 1.5s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

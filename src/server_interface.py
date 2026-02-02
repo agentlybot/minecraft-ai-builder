@@ -32,7 +32,7 @@ class ServerInterface:
         """Establish RCON connection"""
         try:
             from mcrcon import MCRcon
-            self.mcr = MCRcon(self.host, self.port, self.password)
+            self.mcr = MCRcon(self.host, self.password, port=self.port)
             self.mcr.connect()
             print(f"✅ Connected to {self.host}:{self.port}")
         except ImportError:
@@ -68,12 +68,15 @@ class ServerInterface:
         
         for i, cmd in enumerate(commands):
             try:
+                # RCON commands should not have leading slash
+                if cmd.startswith("/"):
+                    cmd = cmd[1:]
                 # Execute command
                 response = self.mcr.command(cmd)
                 results["executed"] += 1
                 
                 # Estimate blocks placed (crude heuristic)
-                if "/fill" in cmd:
+                if cmd.startswith("fill "):
                     # Extract dimensions and estimate
                     parts = cmd.split()
                     try:
@@ -103,32 +106,74 @@ class ServerInterface:
     def execute_single(self, command: str) -> str:
         """
         Execute a single command and return response.
-        
+
         Args:
-            command: Single Minecraft command
-            
+            command: Single Minecraft command (with or without leading /)
+
         Returns:
             Server response text
         """
         if not self.mcr:
             self._connect()
-        
+
+        # RCON commands should not have leading slash
+        if command.startswith("/"):
+            command = command[1:]
+
         return self.mcr.command(command)
     
-    def get_player_position(self) -> Dict[str, float]:
+    def get_player_position(self) -> Dict[str, Any]:
         """
-        Query server for player position.
-        
+        Query server for player position and rotation.
+
         Returns:
-            Dict with x, y, z coordinates
+            Dict with x, y, z coordinates and facing direction
         """
+        import re
+        import math
+
         try:
-            response = self.execute_single("/data get entity @s Pos")
-            # Parse response and extract coordinates
-            # Format: @s has the following entity data: {Pos:[1.5, 65.0, 2.5]}
-            # TODO: Implement parsing
-            return {"x": 0, "y": 64, "z": 0}
-        except:
+            # Get position
+            pos_response = self.execute_single("data get entity @p Pos")
+            # Format: Player has the following entity data: [1.5d, -60.0d, 2.5d]
+            pos_match = re.search(r'\[(-?[\d.]+)d?, (-?[\d.]+)d?, (-?[\d.]+)d?\]', pos_response)
+
+            if pos_match:
+                x = float(pos_match.group(1))
+                y = float(pos_match.group(2))
+                z = float(pos_match.group(3))
+            else:
+                return None
+
+            # Get rotation (yaw, pitch)
+            rot_response = self.execute_single("data get entity @p Rotation")
+            # Format: Player has the following entity data: [90.0f, 0.0f]
+            rot_match = re.search(r'\[(-?[\d.]+)f?, (-?[\d.]+)f?\]', rot_response)
+
+            if rot_match:
+                yaw = float(rot_match.group(1))
+                # Convert yaw to cardinal direction
+                # Yaw: 0 = south, 90 = west, 180/-180 = north, -90 = east
+                yaw_normalized = yaw % 360
+                if yaw_normalized < 0:
+                    yaw_normalized += 360
+
+                # Calculate direction vector
+                yaw_rad = math.radians(yaw)
+                dir_x = -math.sin(yaw_rad)
+                dir_z = math.cos(yaw_rad)
+            else:
+                dir_x, dir_z = 0, 1  # Default to south
+                yaw = 0
+
+            return {
+                "x": x, "y": y, "z": z,
+                "yaw": yaw,
+                "dir_x": dir_x,
+                "dir_z": dir_z
+            }
+        except Exception as e:
+            print(f"Failed to get player position: {e}")
             return None
     
     def get_inventory(self, player: str = "@s") -> List[Dict[str, Any]]:
@@ -147,9 +192,9 @@ class ServerInterface:
     def close(self) -> None:
         """Close RCON connection"""
         if self.mcr:
-            self.mcr.stop()
+            self.mcr.disconnect()
             self.mcr = None
-            print("❌ Disconnected from server")
+            print("🔌 Disconnected from server")
 
 
 if __name__ == "__main__":

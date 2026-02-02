@@ -51,6 +51,9 @@ class MinecraftBuilder:
         # Step 2: Generate Minecraft commands
         commands = self.generator.generate(blueprint)
         print(f"✅ Generated {len(commands)} commands")
+        # Debug: print first few commands
+        for i, cmd in enumerate(commands[:5]):
+            print(f"   Command {i+1}: {cmd[:80]}..." if len(cmd) > 80 else f"   Command {i+1}: {cmd}")
         
         # Step 3: Execute on server
         result = self.server.execute_commands(commands)
