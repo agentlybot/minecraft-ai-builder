@@ -21,7 +21,7 @@ app = FastAPI(title="Craft Architect API", version="1.0.0")
 # Allow CORS for local development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://192.168.7.191:3002"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -100,13 +100,26 @@ class BuildState:
 
     def is_addition_request(self, description: str) -> bool:
         """Check if this is a request to add to existing structure."""
-        addition_patterns = [
-            r'\badd\b', r'\bput\b', r'\bplace\b', r'\binclude\b',
-            r'\bto the\b', r'\bto my\b', r'\bto this\b', r'\bon the\b',
-            r'\binside\b', r'\binterior\b', r'\binside the\b',
-            r'\bnext to\b', r'\bbeside\b', r'\bnear\b', r'\bwith\b'
+        # First check if it's clearly a NEW structure request
+        new_structure_patterns = [
+            r'\bbuild\s+(a|me|another)\b', r'\bcreate\s+(a|me|another)\b',
+            r'\bmake\s+(a|me|another)\b', r'\bnew\b',
+            r'\bcottage\b', r'\bhouse\b', r'\btavern\b', r'\bcastle\b',
+            r'\btower\b', r'\bchurch\b', r'\bbridge\b', r'\bshop\b'
         ]
         desc_lower = description.lower()
+
+        # If it looks like a new structure, it's NOT an addition
+        if any(re.search(p, desc_lower) for p in new_structure_patterns):
+            return False
+
+        # Check for addition patterns (only if we have an existing build)
+        addition_patterns = [
+            r'\badd\s+(a|some|the)\b', r'\bput\s+(a|some|the)\b',
+            r'\bplace\s+(a|some|the)\b', r'\binclude\b',
+            r'\binside\b', r'\binterior\b', r'\bfurnish\b', r'\bdecorate\b',
+            r'\bnext to (the|my|this)\b', r'\bbeside (the|my|this)\b'
+        ]
         return any(re.search(p, desc_lower) for p in addition_patterns) and self.last_build is not None
 
     def is_interior_request(self, description: str) -> bool:
@@ -249,11 +262,13 @@ async def build(request: BuildRequest):
                 # Always use superflat ground level Y=-60
                 ground_y = -60
                 build_pos = [build_x, ground_y, build_z]
-                builder.server.execute_single(f"say 🏰 Building at X:{build_x} Y:{ground_y} Z:{build_z}...")
+                builder.server.execute_single(f"say 🏰 Building where you're looking: X:{build_x} Z:{build_z}")
             else:
                 # Fallback to auto-position if can't get player data
-                build_pos = request.player_pos or build_state.get_next_position()
-                builder.server.execute_single(f"say 🏰 Building at X:{build_pos[0]} Y:{build_pos[1]} Z:{build_pos[2]}...")
+                # Always use fresh position to avoid overlaps
+                build_pos = build_state.get_next_position()
+                builder.server.execute_single(f"say ⚠️ Couldn't get player position, building at X:{build_pos[0]} Z:{build_pos[2]}")
+                builder.server.execute_single(f"say 💡 Tip: Stand where you want to build and look in that direction")
 
             enhanced_description = request.description
             skip_teleport = False

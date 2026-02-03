@@ -390,7 +390,9 @@ def cottage_template(
 def medieval_house_template(
     base_x: int, base_y: int, base_z: int,
     width: int = 11, depth: int = 9, height: int = 6,
-    wood_type: str = "dark_oak", roof_type: str = "spruce"
+    wood_type: str = "dark_oak", roof_type: str = "spruce",
+    has_garden: bool = False, has_chimney: bool = True,
+    **kwargs  # Accept extra options
 ) -> Dict[str, Any]:
     """
     Generate a medieval half-timbered house.
@@ -748,7 +750,9 @@ def medieval_house_template(
 def tavern_template(
     base_x: int, base_y: int, base_z: int,
     width: int = 13, depth: int = 11, height: int = 7,
-    wood_type: str = "spruce", roof_type: str = "dark_oak"
+    wood_type: str = "spruce", roof_type: str = "dark_oak",
+    has_garden: bool = False, has_chimney: bool = True,
+    **kwargs  # Accept extra options
 ) -> Dict[str, Any]:
     """
     Generate a medieval tavern with two floors.
