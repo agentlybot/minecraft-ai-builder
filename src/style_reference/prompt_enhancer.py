@@ -1,0 +1,233 @@
+"""
+Prompt Enhancer
+
+Injects style reference data into AI prompts based on
+build description and available style references.
+"""
+
+import os
+import json
+from typing import Dict, Any, List, Optional
+import re
+
+from .aggregator import AggregatedStyle
+
+
+# Keywords that map to style categories
+CATEGORY_KEYWORDS = {
+    'medieval': ['medieval', 'castle', 'tavern', 'cottage', 'tudor', 'half-timbered',
+                 'knight', 'kingdom', 'fortress', 'keep', 'manor', 'estate', 'german'],
+    'modern': ['modern', 'contemporary', 'minimalist', 'glass', 'skyscraper', 'office'],
+    'fantasy': ['fantasy', 'wizard', 'magical', 'elven', 'dwarven', 'enchanted', 'tower'],
+    'asian': ['asian', 'japanese', 'chinese', 'pagoda', 'temple', 'dojo', 'shrine'],
+    'rustic': ['rustic', 'farm', 'barn', 'cabin', 'log', 'homestead', 'ranch'],
+    'victorian': ['victorian', 'gothic', 'mansion', 'haunted', 'ornate']
+}
+
+
+class PromptEnhancer:
+    """Enhances AI prompts with style reference data."""
+
+    def __init__(self, catalog_path: Optional[str] = None):
+        """
+        Initialize the prompt enhancer.
+
+        Args:
+            catalog_path: Path to the style catalog JSON file.
+                         Defaults to examples/style_references/catalog.json
+        """
+        if catalog_path is None:
+            # Default catalog location
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            catalog_path = os.path.join(base_dir, 'examples', 'style_references', 'catalog.json')
+
+        self.catalog_path = catalog_path
+        self.catalog: Dict[str, AggregatedStyle] = {}
+        self._load_catalog()
+
+    def _load_catalog(self) -> None:
+        """Load the style catalog from disk."""
+        if not os.path.exists(self.catalog_path):
+            return
+
+        try:
+            with open(self.catalog_path, 'r') as f:
+                data = json.load(f)
+
+            for category, style_data in data.get('categories', {}).items():
+                self.catalog[category] = self._dict_to_aggregated_style(style_data)
+
+        except Exception as e:
+            print(f"Warning: Could not load style catalog: {e}")
+
+    def _dict_to_aggregated_style(self, data: Dict[str, Any]) -> AggregatedStyle:
+        """Convert a dict to AggregatedStyle object."""
+        return AggregatedStyle(
+            category=data.get('category', 'general'),
+            example_count=data.get('example_count', 0),
+            recommended_walls=data.get('materials', {}).get('walls', []),
+            recommended_roof=data.get('materials', {}).get('roof', []),
+            recommended_frame=data.get('materials', {}).get('frame', []),
+            recommended_foundation=data.get('materials', {}).get('foundation', []),
+            recommended_decoration=data.get('materials', {}).get('decoration', []),
+            avg_width_height_ratio=data.get('proportions', {}).get('width_height_ratio', 1.5),
+            avg_floors=data.get('proportions', {}).get('typical_floors', 2),
+            typical_footprint=data.get('proportions', {}).get('typical_footprint', '10x10'),
+            common_roof_style=data.get('patterns', {}).get('roof_style', 'peaked'),
+            common_wall_style=data.get('patterns', {}).get('wall_style', 'solid'),
+            common_foundation_style=data.get('patterns', {}).get('foundation_style', 'stone'),
+            common_features=data.get('patterns', {}).get('features', []),
+            target_block_variety=data.get('quality_targets', {}).get('block_variety', 15),
+            target_window_count=data.get('quality_targets', {}).get('window_count', '4-8'),
+            sources=data.get('sources', [])
+        )
+
+    def detect_category(self, description: str) -> Optional[str]:
+        """
+        Detect the style category from a build description.
+
+        Args:
+            description: The build description
+
+        Returns:
+            Category name or None if no match
+        """
+        desc_lower = description.lower()
+
+        for category, keywords in CATEGORY_KEYWORDS.items():
+            if any(kw in desc_lower for kw in keywords):
+                return category
+
+        return None
+
+    def get_style_section(self, category: str) -> Optional[str]:
+        """
+        Generate a style reference section for a category.
+
+        Args:
+            category: The style category
+
+        Returns:
+            Formatted style reference text or None if category not found
+        """
+        if category not in self.catalog:
+            return None
+
+        style = self.catalog[category]
+
+        # Build the style section
+        lines = [
+            f"=== STYLE REFERENCE: {category.upper()} ===",
+            f"Based on analysis of {style.example_count} high-quality example builds:",
+            "",
+            "RECOMMENDED MATERIALS:",
+        ]
+
+        if style.recommended_walls:
+            lines.append(f"- Primary walls: {', '.join(style.recommended_walls)}")
+        if style.recommended_roof:
+            lines.append(f"- Roof: {', '.join(style.recommended_roof)}")
+        if style.recommended_frame:
+            lines.append(f"- Frame: {', '.join(style.recommended_frame)}")
+        if style.recommended_foundation:
+            lines.append(f"- Foundation: {', '.join(style.recommended_foundation)}")
+
+        lines.extend([
+            "",
+            "TYPICAL PROPORTIONS:",
+            f"- Width-to-height ratio: {style.avg_width_height_ratio}",
+            f"- Typical floor count: {style.avg_floors}",
+            f"- Typical footprint: {style.typical_footprint}",
+            "",
+            "ARCHITECTURAL PATTERNS:",
+            f"- Roof style: {style.common_roof_style} (ALWAYS use stairs for peaked roofs)",
+            f"- Wall style: {style.common_wall_style}",
+            f"- Foundation: {style.common_foundation_style}",
+        ])
+
+        if style.common_features:
+            lines.append(f"- Include: {', '.join(style.common_features)}")
+
+        lines.extend([
+            "",
+            "QUALITY TARGETS:",
+            f"- Block variety: {style.target_block_variety}+ different types",
+            f"- Window count: {style.target_window_count} typical",
+            "",
+            "=== END STYLE REFERENCE ==="
+        ])
+
+        return '\n'.join(lines)
+
+    def enhance_prompt(self, base_prompt: str, description: str) -> str:
+        """
+        Enhance a base prompt with style reference data.
+
+        Args:
+            base_prompt: The original system prompt
+            description: The build description (used to detect category)
+
+        Returns:
+            Enhanced prompt with style reference section
+        """
+        # Detect category from description
+        category = self.detect_category(description)
+
+        if category is None:
+            # No matching category, return original prompt
+            return base_prompt
+
+        # Get style section
+        style_section = self.get_style_section(category)
+
+        if style_section is None:
+            # Category detected but no data available
+            return base_prompt
+
+        # Insert style section after the first paragraph of the prompt
+        # Look for the first double newline
+        insert_point = base_prompt.find('\n\n')
+        if insert_point == -1:
+            # No double newline, append to end
+            return base_prompt + '\n\n' + style_section
+
+        # Insert after first paragraph
+        return (
+            base_prompt[:insert_point + 2] +
+            style_section + '\n\n' +
+            base_prompt[insert_point + 2:]
+        )
+
+    def add_style(self, category: str, style: AggregatedStyle) -> None:
+        """
+        Add or update a style in the catalog.
+
+        Args:
+            category: Category name
+            style: AggregatedStyle data
+        """
+        self.catalog[category] = style
+
+    def save_catalog(self) -> None:
+        """Save the catalog to disk."""
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(self.catalog_path), exist_ok=True)
+
+        catalog_data = {
+            'version': '1.0',
+            'categories': {}
+        }
+
+        for category, style in self.catalog.items():
+            catalog_data['categories'][category] = style.to_dict()
+
+        with open(self.catalog_path, 'w') as f:
+            json.dump(catalog_data, f, indent=2)
+
+    def list_categories(self) -> List[str]:
+        """List all available style categories."""
+        return list(self.catalog.keys())
+
+    def has_category(self, category: str) -> bool:
+        """Check if a category exists in the catalog."""
+        return category in self.catalog

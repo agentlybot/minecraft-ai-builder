@@ -19,6 +19,7 @@ from typing import Dict, Any, List, Optional
 
 from building_templates import TEMPLATES, get_template, cottage_template, medieval_house_template, tavern_template
 from voxel_blueprints import get_voxel_blueprint, voxel_to_blueprint_format, VOXEL_BLUEPRINTS
+from style_reference import PromptEnhancer
 
 
 class SpatialAnalyzer:
@@ -33,6 +34,7 @@ class SpatialAnalyzer:
             model: Model to use (defaults based on provider)
         """
         self.provider = provider
+        self.style_enhancer = PromptEnhancer()
 
         if provider == "openai":
             from openai import OpenAI
@@ -44,9 +46,9 @@ class SpatialAnalyzer:
             self.client = anthropic.Anthropic()
             self.model = model or "claude-sonnet-4-20250514"
 
-    def _get_system_prompt(self, base_pos: List[int]) -> str:
+    def _get_system_prompt(self, base_pos: List[int], description: str = "") -> str:
         bx, by, bz = base_pos[0], base_pos[1], base_pos[2]
-        return f"""You are an expert Minecraft architect. You MUST generate HIGHLY DETAILED builds with 50-200+ elements.
+        base_prompt = f"""You are an expert Minecraft architect. You MUST generate HIGHLY DETAILED builds with 50-200+ elements.
 
 CRITICAL RULES:
 1. Generate MANY elements (50-200+). Simple builds need 50+, complex builds need 100-200+
@@ -283,6 +285,12 @@ DECORATION:
 FLOWERS: poppy, dandelion, azure_bluet, cornflower, oxeye_daisy, rose_bush, peony
 - Decor: flower_pot, crafting_table, furnace, chest, barrel"""
 
+        # Enhance with style reference if available
+        if description:
+            base_prompt = self.style_enhancer.enhance_prompt(base_prompt, description)
+
+        return base_prompt
+
     def _parse_options(self, description: str) -> Dict[str, Any]:
         """Extract options from description like wood type, size, features."""
         desc_lower = description.lower()
@@ -366,7 +374,7 @@ FLOWERS: poppy, dandelion, azure_bluet, cornflower, oxeye_daisy, rose_bush, peon
 
     def _analyze_with_ai(self, description: str, base_pos: List[int]) -> Dict[str, Any]:
         """Use AI to generate blueprint for custom builds."""
-        system_prompt = self._get_system_prompt(base_pos)
+        system_prompt = self._get_system_prompt(base_pos, description)
 
         user_prompt = f"""Parse this Minecraft build description into a spatial blueprint:
 
