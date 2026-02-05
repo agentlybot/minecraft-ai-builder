@@ -67,6 +67,7 @@ class PromptEnhancer:
 
     def _dict_to_aggregated_style(self, data: Dict[str, Any]) -> AggregatedStyle:
         """Convert a dict to AggregatedStyle object."""
+        construction = data.get('construction', {})
         return AggregatedStyle(
             category=data.get('category', 'general'),
             example_count=data.get('example_count', 0),
@@ -84,6 +85,15 @@ class PromptEnhancer:
             common_features=data.get('patterns', {}).get('features', []),
             target_block_variety=data.get('quality_targets', {}).get('block_variety', 15),
             target_window_count=data.get('quality_targets', {}).get('window_count', '4-8'),
+            floor_height=construction.get('floor_height', 4),
+            window_y_offset=construction.get('window_y_offset', 2),
+            window_height=construction.get('window_height', 2),
+            window_spacing=construction.get('window_spacing', 3.0),
+            door_y_offset=construction.get('door_y_offset', 1),
+            frame_post_spacing=construction.get('frame_post_spacing', 4.0),
+            frame_post_height=construction.get('frame_post_height', 3),
+            foundation_height=construction.get('foundation_height', 1),
+            roof_overhang=construction.get('roof_overhang', 1),
             sources=data.get('sources', [])
         )
 
@@ -154,6 +164,14 @@ class PromptEnhancer:
             lines.append(f"- Include: {', '.join(style.common_features)}")
 
         lines.extend([
+            "",
+            "CONSTRUCTION RULES (critical for proper building):",
+            f"- Floor height: {style.floor_height} blocks between floors",
+            f"- Windows: Place at Y+{style.window_y_offset} from floor, {style.window_height} blocks tall, ~{round(style.window_spacing, 1)} blocks apart",
+            f"- Doors: Place at Y+{style.door_y_offset} from floor level",
+            f"- Frame posts: Every ~{round(style.frame_post_spacing, 1)} blocks, {style.frame_post_height} blocks tall",
+            f"- Foundation: {style.foundation_height} block(s) of stone/cobblestone above ground",
+            f"- Roof overhang: Extend {style.roof_overhang} block(s) past walls",
             "",
             "QUALITY TARGETS:",
             f"- Block variety: {style.target_block_variety}+ different types",

@@ -49,6 +49,17 @@
       "lanterns"
     ]
   },
+  "construction": {
+    "floor_height": 3,
+    "window_y_offset": 2,
+    "window_height": 2,
+    "window_spacing": 3.0,
+    "door_y_offset": 1,
+    "frame_post_spacing": 6.6,
+    "frame_post_height": 6,
+    "foundation_height": 3,
+    "roof_overhang": 1
+  },
   "quality_targets": {
     "block_variety": 105,
     "window_count": "1-0"

@@ -156,6 +156,50 @@
       "door_count": 384,
       "detail_score": 10
     },
+    "construction": {
+      "floors": {
+        "levels": [
+          2,
+          5,
+          8,
+          11,
+          15,
+          19,
+          24,
+          27,
+          30,
+          34,
+          37,
+          40,
+          43,
+          46
+        ],
+        "height_between": 3,
+        "count": 14
+      },
+      "windows": {
+        "y_offset_from_floor": 2,
+        "height": 2,
+        "horizontal_spacing": 3.0,
+        "per_wall_average": 2.0
+      },
+      "doors": {
+        "y_offset_from_floor": 1,
+        "height": 2,
+        "width": 1
+      },
+      "frame": {
+        "post_spacing": 6.6,
+        "post_height": 6,
+        "corner_posts": true,
+        "mid_wall_posts": true
+      },
+      "walls": {
+        "thickness": 1,
+        "foundation_height": 3,
+        "roof_overhang": 1
+      }
+    },
     "top_blocks": [
       {
         "block": "dirt",

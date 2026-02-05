@@ -125,6 +125,57 @@
       "door_count": 2405,
       "detail_score": 10
     },
+    "construction": {
+      "floors": {
+        "levels": [
+          0,
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          33,
+          36,
+          39,
+          43,
+          46,
+          49,
+          52,
+          55,
+          58,
+          62,
+          65
+        ],
+        "height_between": 3,
+        "count": 21
+      },
+      "windows": {
+        "y_offset_from_floor": 2,
+        "height": 4,
+        "horizontal_spacing": 8.0,
+        "per_wall_average": 3.2
+      },
+      "doors": {
+        "y_offset_from_floor": 2,
+        "height": 2,
+        "width": 1
+      },
+      "frame": {
+        "post_spacing": 4.9,
+        "post_height": 6,
+        "corner_posts": false,
+        "mid_wall_posts": true
+      },
+      "walls": {
+        "thickness": 1,
+        "foundation_height": 1,
+        "roof_overhang": 0
+      }
+    },
     "top_blocks": [
       {
         "block": "quark:marble",

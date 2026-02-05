@@ -46,6 +46,17 @@
       "flower_decorations"
     ]
   },
+  "construction": {
+    "floor_height": 5,
+    "window_y_offset": 3,
+    "window_height": 2,
+    "window_spacing": 7.4,
+    "door_y_offset": 2,
+    "frame_post_spacing": 3.8,
+    "frame_post_height": 6,
+    "foundation_height": 1,
+    "roof_overhang": 1
+  },
   "quality_targets": {
     "block_variety": 57,
     "window_count": "16-48"
