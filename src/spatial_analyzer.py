@@ -39,8 +39,8 @@ class SpatialAnalyzer:
         if provider == "openai":
             from openai import OpenAI
             self.client = OpenAI()
-            # Use gpt-4-turbo for better structured output
-            self.model = model or "gpt-4-turbo"
+            # Use gpt-4o for better instruction following
+            self.model = model or "gpt-4o"
         else:
             import anthropic
             self.client = anthropic.Anthropic()
@@ -48,13 +48,21 @@ class SpatialAnalyzer:
 
     def _get_system_prompt(self, base_pos: List[int], description: str = "") -> str:
         bx, by, bz = base_pos[0], base_pos[1], base_pos[2]
-        base_prompt = f"""You are an expert Minecraft architect. You MUST generate HIGHLY DETAILED builds with 50-200+ elements.
+        base_prompt = f"""You are an expert Minecraft architect generating HIGHLY DETAILED builds.
 
-CRITICAL RULES:
-1. Generate MANY elements (50-200+). Simple builds need 50+, complex builds need 100-200+
-2. NEVER use single large fills for walls. Break walls into: frame posts, infill sections, trim
-3. ALWAYS include: foundation, frame posts, wall infill, windows with frames, proper peaked roof, decorations
-4. Roofs MUST use stairs in a peaked pattern - NEVER flat roofs
+CRITICAL ELEMENT COUNT REQUIREMENTS (MUST FOLLOW):
+- MINIMUM 80 elements for any build, 150+ for medium builds, 250+ for large builds
+- If your response has fewer than 80 elements, it is WRONG - add more detail
+- Each wall needs 4-8 separate elements (posts, infill sections, trim pieces)
+- Each window needs 3 elements (glass, left shutter, right shutter)
+- Each roof slope needs multiple stair rows at different Y levels
+- Add 15+ decoration elements (lanterns, barrels, flower pots, crates, benches)
+
+CRITICAL CONSTRUCTION RULES:
+1. NEVER use single large fills for walls - break into: frame posts + infill sections + trim
+2. Each wall segment between posts is a SEPARATE element (max 3-4 blocks wide)
+3. ALWAYS include: foundation, frame posts at corners, frame posts mid-wall, wall infill panels, window frames, shutters, peaked roof with multiple stair layers, many decorations
+4. Roofs MUST use stairs in a peaked pattern - NEVER flat roofs - each row of stairs is a separate element
 
 Starting position: [{bx}, {by}, {bz}]. Ground Y = {by}.
 
@@ -372,36 +380,60 @@ FLOWERS: poppy, dandelion, azure_bluet, cornflower, oxeye_daisy, rose_bush, peon
         print(f"🤖 No blueprint match, using AI ({self.model})...")
         return self._analyze_with_ai(description, base_pos)
 
-    def _analyze_with_ai(self, description: str, base_pos: List[int]) -> Dict[str, Any]:
-        """Use AI to generate blueprint for custom builds."""
+    def _analyze_with_ai(self, description: str, base_pos: List[int], min_elements: int = 60) -> Dict[str, Any]:
+        """Use AI to generate blueprint for custom builds with validation."""
         system_prompt = self._get_system_prompt(base_pos, description)
 
-        user_prompt = f"""Parse this Minecraft build description into a spatial blueprint:
+        max_retries = 2
+        for attempt in range(max_retries + 1):
+            if attempt > 0:
+                print(f"  Retry {attempt}: Requesting more detail...")
+                extra_instruction = f"\n\nCRITICAL: Your previous response had too few elements. You MUST generate AT LEAST {min_elements} elements. Break every wall into multiple sections. Add more frame posts. Add more decorations. Each window needs glass + 2 shutters. Generate MORE elements!"
+            else:
+                extra_instruction = ""
+
+            user_prompt = f"""Parse this Minecraft build description into a spatial blueprint:
 
 Description: {description}
 Build starting position: {base_pos}
 
 Generate elements with EXACT coordinates starting from {base_pos}.
-Respond with ONLY valid JSON (no markdown, no explanation)."""
+IMPORTANT: Generate at least {min_elements} elements with high detail.
+Respond with ONLY valid JSON (no markdown, no explanation).{extra_instruction}"""
 
-        if self.provider == "openai":
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                max_tokens=4096
-            )
-            response_text = response.choices[0].message.content.strip()
-        else:
-            response = self.client.messages.create(
-                model=self.model,
-                max_tokens=4096,
-                system=system_prompt,
-                messages=[{"role": "user", "content": user_prompt}]
-            )
-            response_text = response.content[0].text.strip()
+            if self.provider == "openai":
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    max_tokens=4096
+                )
+                response_text = response.choices[0].message.content.strip()
+            else:
+                response = self.client.messages.create(
+                    model=self.model,
+                    max_tokens=4096,
+                    system=system_prompt,
+                    messages=[{"role": "user", "content": user_prompt}]
+                )
+                response_text = response.content[0].text.strip()
+
+            # Parse and validate
+            blueprint = self._parse_ai_response(response_text)
+            if blueprint:
+                element_count = len(blueprint.get('elements', []))
+                if element_count >= min_elements or attempt == max_retries:
+                    if element_count < min_elements:
+                        print(f"  Warning: Only {element_count} elements (wanted {min_elements}+)")
+                    return blueprint
+                print(f"  Got {element_count} elements, need {min_elements}+")
+
+        raise ValueError("Failed to generate blueprint with sufficient detail")
+
+    def _parse_ai_response(self, response_text: str) -> Dict[str, Any]:
+        """Parse AI response text into blueprint dict."""
 
         # Handle markdown code blocks if AI wraps response
         if response_text.startswith("```"):
@@ -409,6 +441,27 @@ Respond with ONLY valid JSON (no markdown, no explanation)."""
             if response_text.startswith("json"):
                 response_text = response_text[4:]
             response_text = response_text.strip()
+
+        # Remove JavaScript-style comments (// ...) that AI sometimes adds
+        lines = response_text.split('\n')
+        clean_lines = []
+        for line in lines:
+            # Remove inline comments but preserve strings
+            if '//' in line:
+                # Simple approach: remove everything after // if not in a string
+                in_string = False
+                result = []
+                i = 0
+                while i < len(line):
+                    if line[i] == '"' and (i == 0 or line[i-1] != '\\'):
+                        in_string = not in_string
+                    if not in_string and line[i:i+2] == '//':
+                        break
+                    result.append(line[i])
+                    i += 1
+                line = ''.join(result).rstrip()
+            clean_lines.append(line)
+        response_text = '\n'.join(clean_lines)
 
         try:
             blueprint = json.loads(response_text)
