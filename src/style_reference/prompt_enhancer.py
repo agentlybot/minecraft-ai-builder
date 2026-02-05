@@ -14,14 +14,19 @@ from .aggregator import AggregatedStyle
 
 
 # Keywords that map to style categories
+# Order matters - first match wins, so put specific categories before general ones
 CATEGORY_KEYWORDS = {
-    'medieval': ['medieval', 'castle', 'tavern', 'cottage', 'tudor', 'half-timbered',
-                 'knight', 'kingdom', 'fortress', 'keep', 'manor', 'estate', 'german'],
+    'estate': ['estate', 'manor', 'mansion', 'villa', 'chateau', 'german'],
+    'hotel': ['hotel', 'inn', 'tavern', 'hostel', 'lodge', 'guesthouse', 'barrel inn', 'pub'],
+    'industrial': ['industrial', 'blacksmith', 'forge', 'workshop', 'factory', 'foundry',
+                   'machine', 'smith', 'craftsman'],
+    'medieval': ['medieval', 'castle', 'cottage', 'tudor', 'half-timbered',
+                 'knight', 'kingdom', 'fortress', 'keep'],
     'modern': ['modern', 'contemporary', 'minimalist', 'glass', 'skyscraper', 'office'],
     'fantasy': ['fantasy', 'wizard', 'magical', 'elven', 'dwarven', 'enchanted', 'tower'],
     'asian': ['asian', 'japanese', 'chinese', 'pagoda', 'temple', 'dojo', 'shrine'],
     'rustic': ['rustic', 'farm', 'barn', 'cabin', 'log', 'homestead', 'ranch'],
-    'victorian': ['victorian', 'gothic', 'mansion', 'haunted', 'ornate']
+    'victorian': ['victorian', 'gothic', 'haunted', 'ornate']
 }
 
 

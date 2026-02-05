@@ -1,0 +1,59 @@
+{
+  "category": "industrial",
+  "example_count": 1,
+  "materials": {
+    "walls": [
+      "brown_concrete_powder",
+      "oak_planks",
+      "brown_concrete",
+      "dark_oak_planks",
+      "omni:white_concrete_powder"
+    ],
+    "roof": [
+      "spruce_slab",
+      "cobblestone_slab",
+      "stone_slab"
+    ],
+    "frame": [
+      "stripped_spruce_log",
+      "stripped_spruce_wood",
+      "stripped_dark_oak_wood"
+    ],
+    "foundation": [
+      "quark:cobblestone_bricks",
+      "cobblestone",
+      "smooth_stone"
+    ],
+    "decoration": [
+      "spruce_trapdoor",
+      "lever",
+      "dark_oak_trapdoor",
+      "lantern",
+      "structurize:blockbarreldeco_standing"
+    ]
+  },
+  "proportions": {
+    "width_height_ratio": 1.28,
+    "typical_floors": 13,
+    "typical_footprint": "69x55"
+  },
+  "patterns": {
+    "roof_style": "peaked",
+    "wall_style": "half_timbered",
+    "foundation_style": "cobblestone",
+    "features": [
+      "chimney",
+      "porch",
+      "balcony",
+      "window_shutters",
+      "lanterns"
+    ]
+  },
+  "quality_targets": {
+    "block_variety": 105,
+    "window_count": "1-0"
+  },
+  "sources": [
+    "blacksmith_and_basic_machines_1_xjftgtivp0"
+  ]
+}

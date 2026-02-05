@@ -1,0 +1,56 @@
+{
+  "category": "estate",
+  "example_count": 1,
+  "materials": {
+    "walls": [
+      "oak_planks",
+      "spruce_planks"
+    ],
+    "roof": [
+      "cobblestone_slab",
+      "cobblestone_stairs",
+      "oak_stairs"
+    ],
+    "frame": [
+      "oak_log",
+      "stripped_oak_log",
+      "stripped_oak_wood"
+    ],
+    "foundation": [
+      "stone_bricks",
+      "andesite",
+      "cobblestone"
+    ],
+    "decoration": [
+      "oak_trapdoor",
+      "oak_button",
+      "torch",
+      "lantern",
+      "stone_button"
+    ]
+  },
+  "proportions": {
+    "width_height_ratio": 1.15,
+    "typical_floors": 5,
+    "typical_footprint": "23x22"
+  },
+  "patterns": {
+    "roof_style": "peaked",
+    "wall_style": "half_timbered",
+    "foundation_style": "cobblestone",
+    "features": [
+      "chimney",
+      "porch",
+      "window_shutters",
+      "lanterns",
+      "flower_decorations"
+    ]
+  },
+  "quality_targets": {
+    "block_variety": 57,
+    "window_count": "16-48"
+  },
+  "sources": [
+    "german_estate"
+  ]
+}

@@ -1,5 +1,178 @@
 {
   "version": "1.0",
-  "description": "Style reference catalog - automatically updated by process_examples.py",
-  "categories": {}
+  "categories": {
+    "estate": {
+      "category": "estate",
+      "example_count": 1,
+      "materials": {
+        "walls": [
+          "oak_planks",
+          "spruce_planks"
+        ],
+        "roof": [
+          "cobblestone_slab",
+          "cobblestone_stairs",
+          "oak_stairs"
+        ],
+        "frame": [
+          "oak_log",
+          "stripped_oak_log",
+          "stripped_oak_wood"
+        ],
+        "foundation": [
+          "stone_bricks",
+          "andesite",
+          "cobblestone"
+        ],
+        "decoration": [
+          "oak_trapdoor",
+          "oak_button",
+          "torch",
+          "lantern",
+          "stone_button"
+        ]
+      },
+      "proportions": {
+        "width_height_ratio": 1.15,
+        "typical_floors": 5,
+        "typical_footprint": "23x22"
+      },
+      "patterns": {
+        "roof_style": "peaked",
+        "wall_style": "half_timbered",
+        "foundation_style": "cobblestone",
+        "features": [
+          "chimney",
+          "porch",
+          "window_shutters",
+          "lanterns",
+          "flower_decorations"
+        ]
+      },
+      "quality_targets": {
+        "block_variety": 57,
+        "window_count": "16-48"
+      },
+      "sources": [
+        "german_estate"
+      ]
+    },
+    "hotel": {
+      "category": "hotel",
+      "example_count": 1,
+      "materials": {
+        "walls": [
+          "dark_oak_planks",
+          "chisel:planks/spruce/crude_horizontal_planks",
+          "light_blue_concrete",
+          "cyan_concrete",
+          "spruce_planks"
+        ],
+        "roof": [
+          "dark_oak_slab",
+          "quark:cobblestone_bricks_slab",
+          "quark:dark_oak_vertical_slab"
+        ],
+        "frame": [
+          "stripped_dark_oak_log",
+          "stripped_oak_log",
+          "stripped_dark_oak_wood"
+        ],
+        "foundation": [
+          "quark:cobblestone_bricks",
+          "chisel:stone_bricks/tiles_medium",
+          "glowstone"
+        ],
+        "decoration": [
+          "sea_lantern",
+          "spruce_trapdoor",
+          "wall_torch",
+          "lantern",
+          "torch"
+        ]
+      },
+      "proportions": {
+        "width_height_ratio": 1.34,
+        "typical_floors": 21,
+        "typical_footprint": "115x114"
+      },
+      "patterns": {
+        "roof_style": "peaked",
+        "wall_style": "half_timbered",
+        "foundation_style": "cobblestone",
+        "features": [
+          "porch",
+          "balcony",
+          "window_shutters",
+          "lanterns"
+        ]
+      },
+      "quality_targets": {
+        "block_variety": 75,
+        "window_count": "285-855"
+      },
+      "sources": [
+        "the_big_barrel_inn_1_16_7leuf5t1fn"
+      ]
+    },
+    "industrial": {
+      "category": "industrial",
+      "example_count": 1,
+      "materials": {
+        "walls": [
+          "brown_concrete_powder",
+          "oak_planks",
+          "brown_concrete",
+          "dark_oak_planks",
+          "omni:white_concrete_powder"
+        ],
+        "roof": [
+          "spruce_slab",
+          "cobblestone_slab",
+          "stone_slab"
+        ],
+        "frame": [
+          "stripped_spruce_log",
+          "stripped_spruce_wood",
+          "stripped_dark_oak_wood"
+        ],
+        "foundation": [
+          "quark:cobblestone_bricks",
+          "cobblestone",
+          "smooth_stone"
+        ],
+        "decoration": [
+          "spruce_trapdoor",
+          "lever",
+          "dark_oak_trapdoor",
+          "lantern",
+          "structurize:blockbarreldeco_standing"
+        ]
+      },
+      "proportions": {
+        "width_height_ratio": 1.28,
+        "typical_floors": 13,
+        "typical_footprint": "69x55"
+      },
+      "patterns": {
+        "roof_style": "peaked",
+        "wall_style": "half_timbered",
+        "foundation_style": "cobblestone",
+        "features": [
+          "chimney",
+          "porch",
+          "balcony",
+          "window_shutters",
+          "lanterns"
+        ]
+      },
+      "quality_targets": {
+        "block_variety": 105,
+        "window_count": "1-0"
+      },
+      "sources": [
+        "blacksmith_and_basic_machines_1_xjftgtivp0"
+      ]
+    }
+  }
 }

@@ -1,0 +1,222 @@
+{
+  "name": "blacksmith_and_basic_machines_1_xjftgtivp0",
+  "category": "industrial",
+  "source_file": "examples/style_references/industrial/blacksmith_and_basic_machines_1_xjftgtivp0.nbt",
+  "metrics": {
+    "name": "blacksmith_and_basic_machines_1_xjftgtivp0",
+    "materials": {
+      "primary_wall": [
+        "brown_concrete_powder",
+        "oak_planks",
+        "brown_concrete",
+        "dark_oak_planks",
+        "omni:white_concrete_powder",
+        "white_concrete_powder",
+        "spruce_planks",
+        "white_concrete",
+        "omni:white_concrete"
+      ],
+      "roof": [
+        "spruce_slab",
+        "cobblestone_slab",
+        "stone_slab",
+        "dark_oak_slab",
+        "spruce_stairs",
+        "dark_oak_stairs",
+        "stone_brick_stairs"
+      ],
+      "frame": [
+        "stripped_spruce_log",
+        "stripped_spruce_wood",
+        "stripped_dark_oak_wood",
+        "mcwfences:spruce_stockade_fence",
+        "mcwfences:spruce_highley_gate",
+        "dark_oak_fence",
+        "spruce_fence",
+        "spruce_fence_gate",
+        "mcwfences:oak_horse_fence"
+      ],
+      "floor": [],
+      "foundation": [
+        "quark:cobblestone_bricks",
+        "cobblestone",
+        "smooth_stone",
+        "stone_bricks",
+        "diorite",
+        "polished_diorite",
+        "create:weathered_limestone_cobblestone",
+        "cracked_stone_bricks",
+        "stone",
+        "cobblestone_wall"
+      ],
+      "decoration": [
+        "spruce_trapdoor",
+        "lever",
+        "dark_oak_trapdoor",
+        "lantern",
+        "structurize:blockbarreldeco_standing",
+        "dark_oak_button",
+        "chain",
+        "decorative_blocks:chain",
+        "chest",
+        "barrel",
+        "campfire",
+        "oak_wall_sign",
+        "spruce_wall_sign",
+        "oak_sign",
+        "supplementaries:wall_lantern"
+      ],
+      "glass": [],
+      "other": [
+        "dirt",
+        "magma_block",
+        "grass_block",
+        "coarse_dirt",
+        "quark:stick_block",
+        "gravel",
+        "podzol",
+        "oak_leaves",
+        "hay_block",
+        "create:brass_casing",
+        "quark:lit_lamp",
+        "create:dark_oak_window",
+        "rose_bush",
+        "tall_grass",
+        "grass",
+        "azure_bluet",
+        "large_fern",
+        "iron_bars",
+        "lilac",
+        "dark_oak_door",
+        "composter",
+        "quark:dark_oak_ladder",
+        "create:red_seat",
+        "decorative_blocks:dark_oak_support",
+        "create:spruce_window_pane",
+        "mcwwindows:spruce_window2",
+        "sweet_berry_bush",
+        "potted_azure_bluet",
+        "quark:spruce_ladder",
+        "supplementaries:planter",
+        "create:fluid_pipe",
+        "create:mechanical_bearing",
+        "create:chute",
+        "create:blaze_burner",
+        "create:encased_fan",
+        "hopper",
+        "create:flywheel",
+        "create:large_cogwheel",
+        "create:shaft",
+        "create:water_wheel",
+        "create:radial_chassis",
+        "create:linear_chassis",
+        "create:portable_storage_interface",
+        "create:mechanical_harvester",
+        "create:basin",
+        "create:depot",
+        "create:cogwheel",
+        "create:gearbox",
+        "create:crushing_wheel",
+        "create:crushing_wheel_controller",
+        "supplementaries:sack",
+        "storagedrawers:oak_full_drawers_1",
+        "create:mechanical_mixer",
+        "create:mechanical_press",
+        "create:mechanical_drill"
+      ]
+    },
+    "proportions": {
+      "width": 69,
+      "height": 54,
+      "depth": 55,
+      "width_height_ratio": 1.28,
+      "width_depth_ratio": 1.25,
+      "estimated_floors": 13,
+      "footprint_area": 3795,
+      "volume": 204930
+    },
+    "patterns": {
+      "roof_style": "peaked",
+      "wall_style": "half_timbered",
+      "foundation_style": "cobblestone",
+      "features": [
+        "chimney",
+        "porch",
+        "balcony",
+        "window_shutters",
+        "lanterns",
+        "flower_decorations"
+      ],
+      "symmetry": "asymmetric"
+    },
+    "quality": {
+      "block_variety": 105,
+      "decoration_density": 0.0032,
+      "window_count": 0,
+      "door_count": 384,
+      "detail_score": 10
+    },
+    "top_blocks": [
+      {
+        "block": "dirt",
+        "count": 5134
+      },
+      {
+        "block": "stripped_spruce_log",
+        "count": 3109
+      },
+      {
+        "block": "spruce_stairs",
+        "count": 1651
+      },
+      {
+        "block": "spruce_planks",
+        "count": 1471
+      },
+      {
+        "block": "white_concrete_powder",
+        "count": 1037
+      },
+      {
+        "block": "spruce_slab",
+        "count": 1032
+      },
+      {
+        "block": "dark_oak_stairs",
+        "count": 757
+      },
+      {
+        "block": "grass_block",
+        "count": 656
+      },
+      {
+        "block": "brown_concrete_powder",
+        "count": 637
+      },
+      {
+        "block": "coarse_dirt",
+        "count": 518
+      },
+      {
+        "block": "dark_oak_planks",
+        "count": 494
+      },
+      {
+        "block": "diorite",
+        "count": 441
+      },
+      {
+        "block": "stone_bricks",
+        "count": 409
+      },
+      {
+        "block": "mcwfences:spruce_stockade_fence",
+        "count": 405
+      },
+      {
+        "block": "smooth_stone",
+        "count": 385
+      }
+    ]
+  }
+}

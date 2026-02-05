@@ -1,0 +1,191 @@
+{
+  "name": "the_big_barrel_inn_1_16_7leuf5t1fn",
+  "category": "hotel",
+  "source_file": "examples/style_references/hotel/the_big_barrel_inn_1_16_7leuf5t1fn.nbt",
+  "metrics": {
+    "name": "the_big_barrel_inn_1_16_7leuf5t1fn",
+    "materials": {
+      "primary_wall": [
+        "dark_oak_planks",
+        "chisel:planks/spruce/crude_horizontal_planks",
+        "light_blue_concrete",
+        "cyan_concrete",
+        "spruce_planks"
+      ],
+      "roof": [
+        "dark_oak_slab",
+        "quark:cobblestone_bricks_slab",
+        "quark:dark_oak_vertical_slab",
+        "quark:marble_slab",
+        "quark:orange_shingles",
+        "quark:cyan_shingles",
+        "quark:orange_shingles_slab",
+        "quark:cyan_shingles_slab",
+        "spruce_stairs",
+        "stone_brick_stairs",
+        "quark:mossy_cobblestone_bricks_stairs",
+        "quark:cobblestone_bricks_stairs",
+        "stone_brick_slab",
+        "dark_oak_stairs",
+        "quark:marble_stairs",
+        "quark:marble_vertical_slab",
+        "spruce_slab",
+        "quark:spruce_vertical_slab",
+        "quark:orange_shingles_stairs",
+        "quark:cyan_shingles_stairs",
+        "quark:sandy_bricks_stairs",
+        "polished_andesite_slab"
+      ],
+      "frame": [
+        "stripped_dark_oak_log",
+        "stripped_oak_log",
+        "stripped_dark_oak_wood",
+        "cfm:stripped_spruce_upgraded_fence",
+        "immersiveengineering:steel_fence",
+        "dark_oak_fence",
+        "spruce_fence_gate",
+        "quark:stripped_dark_oak_post",
+        "dark_oak_fence_gate"
+      ],
+      "floor": [],
+      "foundation": [
+        "quark:cobblestone_bricks",
+        "chisel:stone_bricks/tiles_medium",
+        "glowstone",
+        "quark:mossy_cobblestone_bricks",
+        "chisel:stone_bricks/pillar",
+        "polished_andesite",
+        "prismarine_bricks",
+        "quark:cobblestone_bricks_wall",
+        "supplementaries:stone_lamp",
+        "quark:soul_sandstone_wall",
+        "cobblestone_wall"
+      ],
+      "decoration": [
+        "sea_lantern",
+        "spruce_trapdoor",
+        "wall_torch",
+        "lantern",
+        "torch",
+        "quark:white_candle",
+        "chain",
+        "supplementaries:copper_lantern",
+        "barrel",
+        "quark:dark_oak_trapped_chest",
+        "quark:acacia_chest",
+        "quark:dark_oak_chest"
+      ],
+      "glass": [
+        "quark:orange_framed_glass",
+        "chipped:orange_stained_glass_pane_3",
+        "chipped:orange_stained_glass_pane_4",
+        "chipped:glass_pane_9"
+      ],
+      "other": [
+        "oak_leaves",
+        "quark:marble",
+        "grass_block",
+        "quark:paper_wall",
+        "quark:paper_wall_big",
+        "iron_bars",
+        "spruce_door",
+        "composter",
+        "supplementaries:pedestal",
+        "quark:dark_oak_ladder",
+        "supplementaries:sconce_wall",
+        "quark:iron_rod"
+      ]
+    },
+    "proportions": {
+      "width": 115,
+      "height": 86,
+      "depth": 114,
+      "width_height_ratio": 1.34,
+      "width_depth_ratio": 1.01,
+      "estimated_floors": 21,
+      "footprint_area": 13110,
+      "volume": 1127460
+    },
+    "patterns": {
+      "roof_style": "peaked",
+      "wall_style": "half_timbered",
+      "foundation_style": "cobblestone",
+      "features": [
+        "porch",
+        "balcony",
+        "window_shutters",
+        "lanterns"
+      ],
+      "symmetry": "symmetric"
+    },
+    "quality": {
+      "block_variety": 75,
+      "decoration_density": 0.0028,
+      "window_count": 570,
+      "door_count": 2405,
+      "detail_score": 10
+    },
+    "top_blocks": [
+      {
+        "block": "quark:marble",
+        "count": 15908
+      },
+      {
+        "block": "chisel:planks/spruce/crude_horizontal_planks",
+        "count": 9284
+      },
+      {
+        "block": "quark:orange_shingles_stairs",
+        "count": 7556
+      },
+      {
+        "block": "stripped_dark_oak_log",
+        "count": 6622
+      },
+      {
+        "block": "quark:orange_shingles",
+        "count": 4048
+      },
+      {
+        "block": "quark:cobblestone_bricks",
+        "count": 2928
+      },
+      {
+        "block": "dark_oak_planks",
+        "count": 2894
+      },
+      {
+        "block": "spruce_trapdoor",
+        "count": 2393
+      },
+      {
+        "block": "spruce_planks",
+        "count": 2279
+      },
+      {
+        "block": "dark_oak_slab",
+        "count": 2167
+      },
+      {
+        "block": "oak_leaves",
+        "count": 1886
+      },
+      {
+        "block": "quark:dark_oak_vertical_slab",
+        "count": 1426
+      },
+      {
+        "block": "dark_oak_fence_gate",
+        "count": 1296
+      },
+      {
+        "block": "dark_oak_stairs",
+        "count": 1207
+      },
+      {
+        "block": "spruce_stairs",
+        "count": 1167
+      }
+    ]
+  }
+}

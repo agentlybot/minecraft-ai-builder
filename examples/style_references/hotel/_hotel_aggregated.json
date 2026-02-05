@@ -1,0 +1,58 @@
+{
+  "category": "hotel",
+  "example_count": 1,
+  "materials": {
+    "walls": [
+      "dark_oak_planks",
+      "chisel:planks/spruce/crude_horizontal_planks",
+      "light_blue_concrete",
+      "cyan_concrete",
+      "spruce_planks"
+    ],
+    "roof": [
+      "dark_oak_slab",
+      "quark:cobblestone_bricks_slab",
+      "quark:dark_oak_vertical_slab"
+    ],
+    "frame": [
+      "stripped_dark_oak_log",
+      "stripped_oak_log",
+      "stripped_dark_oak_wood"
+    ],
+    "foundation": [
+      "quark:cobblestone_bricks",
+      "chisel:stone_bricks/tiles_medium",
+      "glowstone"
+    ],
+    "decoration": [
+      "sea_lantern",
+      "spruce_trapdoor",
+      "wall_torch",
+      "lantern",
+      "torch"
+    ]
+  },
+  "proportions": {
+    "width_height_ratio": 1.34,
+    "typical_floors": 21,
+    "typical_footprint": "115x114"
+  },
+  "patterns": {
+    "roof_style": "peaked",
+    "wall_style": "half_timbered",
+    "foundation_style": "cobblestone",
+    "features": [
+      "porch",
+      "balcony",
+      "window_shutters",
+      "lanterns"
+    ]
+  },
+  "quality_targets": {
+    "block_variety": 75,
+    "window_count": "285-855"
+  },
+  "sources": [
+    "the_big_barrel_inn_1_16_7leuf5t1fn"
+  ]
+}

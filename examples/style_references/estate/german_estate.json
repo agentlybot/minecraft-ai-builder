@@ -1,0 +1,174 @@
+{
+  "name": "german_estate",
+  "category": "estate",
+  "source_file": "examples/style_references/estate/german_estate.nbt",
+  "metrics": {
+    "name": "german_estate",
+    "materials": {
+      "primary_wall": [
+        "oak_planks",
+        "spruce_planks"
+      ],
+      "roof": [
+        "cobblestone_slab",
+        "cobblestone_stairs",
+        "oak_stairs",
+        "stone_brick_stairs",
+        "spruce_stairs",
+        "stone_brick_slab",
+        "spruce_slab"
+      ],
+      "frame": [
+        "oak_log",
+        "stripped_oak_log",
+        "stripped_oak_wood",
+        "oak_fence",
+        "oak_fence_gate"
+      ],
+      "floor": [],
+      "foundation": [
+        "stone_bricks",
+        "andesite",
+        "cobblestone",
+        "smooth_stone",
+        "stone",
+        "stonecutter"
+      ],
+      "decoration": [
+        "oak_trapdoor",
+        "oak_button",
+        "torch",
+        "lantern",
+        "stone_button",
+        "spruce_trapdoor",
+        "chest",
+        "barrel",
+        "campfire"
+      ],
+      "glass": [
+        "glass_pane"
+      ],
+      "other": [
+        "grass_block",
+        "dirt",
+        "waxed_cut_copper",
+        "waxed_oxidized_cut_copper",
+        "crafting_table",
+        "oak_leaves",
+        "rail",
+        "dirt_path",
+        "brick_wall",
+        "powered_rail",
+        "rose_bush",
+        "oak_door",
+        "potted_dandelion",
+        "potted_azure_bluet",
+        "potted_poppy",
+        "potted_birch_sapling",
+        "potted_oxeye_daisy",
+        "potted_red_mushroom",
+        "potted_red_tulip",
+        "potted_oak_sapling",
+        "spruce_door",
+        "potted_lily_of_the_valley",
+        "potted_allium",
+        "potted_blue_orchid",
+        "smoker",
+        "furnace",
+        "blast_furnace"
+      ]
+    },
+    "proportions": {
+      "width": 23,
+      "height": 20,
+      "depth": 22,
+      "width_height_ratio": 1.15,
+      "width_depth_ratio": 1.05,
+      "estimated_floors": 5,
+      "footprint_area": 506,
+      "volume": 10120
+    },
+    "patterns": {
+      "roof_style": "peaked",
+      "wall_style": "half_timbered",
+      "foundation_style": "cobblestone",
+      "features": [
+        "chimney",
+        "porch",
+        "window_shutters",
+        "lanterns",
+        "flower_decorations"
+      ],
+      "symmetry": "symmetric"
+    },
+    "quality": {
+      "block_variety": 57,
+      "decoration_density": 0.0105,
+      "window_count": 32,
+      "door_count": 36,
+      "detail_score": 10
+    },
+    "top_blocks": [
+      {
+        "block": "cobblestone",
+        "count": 357
+      },
+      {
+        "block": "oak_planks",
+        "count": 312
+      },
+      {
+        "block": "stripped_oak_log",
+        "count": 193
+      },
+      {
+        "block": "dirt",
+        "count": 166
+      },
+      {
+        "block": "oak_log",
+        "count": 154
+      },
+      {
+        "block": "spruce_stairs",
+        "count": 136
+      },
+      {
+        "block": "stone_bricks",
+        "count": 89
+      },
+      {
+        "block": "grass_block",
+        "count": 86
+      },
+      {
+        "block": "spruce_planks",
+        "count": 50
+      },
+      {
+        "block": "campfire",
+        "count": 47
+      },
+      {
+        "block": "dirt_path",
+        "count": 41
+      },
+      {
+        "block": "smooth_stone",
+        "count": 35
+      },
+      {
+        "block": "oak_fence",
+        "count": 34
+      },
+      {
+        "block": "spruce_slab",
+        "count": 34
+      },
+      {
+        "block": "stripped_oak_wood",
+        "count": 33
+      }
+    ]
+  }
+}
